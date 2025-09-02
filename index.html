@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" style="--bg: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600&auto=format&fit=crop');">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday Babyyyy</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="login-page">
+  <div class="overlay-hearts" aria-hidden="true"></div>
+
+  <main class="card login-card">
+    <h1 class="brand">
+      <span>🎂</span>
+      <span>Love Access</span>
+    </h1>
+
+    <p class="subtitle">Enter the secret to open your birthday Messages 💖</p>
+
+    <form id="loginForm" class="form">
+      <div class="field">
+        <label for="name">Your Name</label>
+        <input id="name" name="name" type="text" placeholder="e.g. Phizzy" required />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="••••••••" required />
+      </div>
+
+      <div class="remember">
+        <label>
+          <input type="checkbox" id="rememberMe" />
+          Remember me
+        </label>
+      </div>
+
+      <button type="submit" class="btn">Enter</button>
+      <p id="error" class="error" role="alert" aria-live="polite"></p>
+    </form>
+     
+    <!-----
+    <footer class="tiny">
+      Tip: Change the background by editing the <code>--bg</code> url on the &lt;html&gt; tag.
+    </footer>
+    ---->
+  </main>
+
+
+
+  
+  <script>
+    // ====== SIMPLE FRONT-END LOGIN (demo) ======
+    // Set your desired name & password here:
+    const VALID_NAME = "my dick sucker";     // <<-- change to her name
+    const VALID_PASSWORD = "0905";   // <<-- change to your secret
+
+    // Auto-fill from localStorage if saved
+    const saved = JSON.parse(localStorage.getItem("bday_auth") || "null");
+    if (saved && saved.name && saved.token === btoa(VALID_NAME + ":" + VALID_PASSWORD)) {
+      window.location.href = "birthday.html";
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const pass = document.getElementById("password").value;
+      const remember = document.getElementById("rememberMe").checked;
+      const errorEl = document.getElementById("error");
+
+      if (name === VALID_NAME && pass === VALID_PASSWORD) {
+        if (remember) {
+          localStorage.setItem("bday_auth", JSON.stringify({
+            name,
+            token: btoa(VALID_NAME + ":" + VALID_PASSWORD)
+          }));
+        }
+        // cute success animation before redirect
+        document.body.classList.add("unblur");
+        setTimeout(() => { window.location.href = "birthday.html"; }, 500);
+      } else {
+        errorEl.textContent = "Phizzy Baby! Name or password isn’t correct.";
+        document.querySelector(".card").classList.add("shake");
+        setTimeout(() => document.querySelector(".card").classList.remove("shake"), 500);
+      }
+    });
+  </script>
+</body>
+</html>
